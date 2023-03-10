@@ -7,7 +7,7 @@ app = Flask(__name__)
 # Устанавливаем параметры для подключения к базе данных
 uri = "bolt://localhost:7687"
 username = "neo4j"
-password = "supernatural333"
+password = "neo4j"
 
 # Создаем экземпляр драйвера для работы с базой данных
 driver = GraphDatabase.driver(uri, auth=basic_auth(username, password))

@@ -4,7 +4,7 @@ from data_loader import read_from_YD
 # Подключение к базе данных Neo4j
 uri = "bolt://localhost:7687"
 username = "neo4j"
-password = "supernatural333"
+password = "neo4j"
 driver = GraphDatabase.driver(uri, auth=(username, password))
 
 # Загрузка данных из файла на Яндекс.Диске
