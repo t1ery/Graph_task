@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Graph</title>
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <style type="text/css">
+    #mynetwork {
+      width: 100%;
+      height: 600px;
+      border: 1px solid lightgray;
+    }
+  </style>
+</head>
+<body>
+  <h1>Поиск в Базе Данных</h1>
+  <form action="/graph" method="POST">
+    <label for="fio">ФИО:</label>
+    <input type="text" id="fio" name="fio">
+    <input type="submit" value="Найти">
+  </form>
+  <div id="mynetwork"></div>
+  <script type="text/javascript">
+    var nodes = new vis.DataSet([]);
+    var edges = new vis.DataSet([]);
+    var container = document.getElementById("mynetwork");
+    var data = {
+      nodes: nodes,
+      edges: edges
+    };
+    var options = {};
+    var network = new vis.Network(container, data, options);
+    function updateGraph() {
+      var fio = document.getElementById("fio").value;
+      fetch("/graph", {
+        method: "POST",
+        body: new URLSearchParams({fio: fio})
+      }).then(response => response.json())
+        .then(result => {
+          nodes.clear();
+          edges.clear();
+          nodes.add(result.nodes);
+          edges.add(result.edges);
+        }).catch(error => {
+          alert("Произошла ошибка: " + error.message);
+        });
+    }
+    document.querySelector("form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      updateGraph();
+    });
+  </script>
+</body>
+</html>
+
+
+
+
